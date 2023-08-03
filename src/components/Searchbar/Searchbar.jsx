@@ -1,51 +1,46 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import css from './Searchbar.module.css';
-import dataFromPixabay from 'components/API/Api';
 import Notiflix from 'notiflix';
 import PropTypes from 'prop-types';
 
-class Searchbar extends Component {
-  state = { inputSearch: '', page: 1 };
+const Searchbar = ({ onSubmit }) => {
+  const [inputSearch, setInputSearch] = useState('');
 
-  async componentDidMount() {
-    await dataFromPixabay(this.state.inputSearch);
-  }
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    if (this.state.inputSearch.trim() === '') {
+    if (inputSearch === '') {
       return Notiflix.Notify.failure('Nothing was found');
     }
-    this.props.onSubmit(this.state.inputSearch);
-    this.setState({ inputSearch: '' });
+
+    onSubmit(inputSearch);
+    setInputSearch('');
   };
-  handleChange = e => {
-    const search = e.currentTarget.value.toLowerCase();
-    this.setState({ inputSearch: search });
+  const handleChange = e => {
+    const { value } = e.currentTarget;
+    setInputSearch(value.toLowerCase().trim());
   };
 
-  render() {
-    return (
-      <header className={css.Searchbar}>
-        <form className={css.SearchForm} onSubmit={this.handleSubmit}>
-          <button type="submit" className={css.SearchFormButton}>
-            <span className={css.SearchFormButtonLabel}>Search</span>
-          </button>
+  return (
+    <header className={css.Searchbar}>
+      <form className={css.SearchForm} onSubmit={handleSubmit}>
+        <button type="submit" className={css.SearchFormButton}>
+          <span className={css.SearchFormButtonLabel}>Search</span>
+        </button>
 
-          <input
-            className={css.SearchFormInput}
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            name="inputSearch"
-            onChange={this.handleChange}
-            value={this.state.inputSearch}
-          />
-        </form>
-      </header>
-    );
-  }
-}
+        <input
+          className={css.SearchFormInput}
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          name="inputSearch"
+          onChange={handleChange}
+          value={inputSearch}
+        />
+      </form>
+    </header>
+  );
+};
 
 export default Searchbar;
 

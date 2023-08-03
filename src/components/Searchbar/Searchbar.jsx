@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import css from './Searchbar.module.css';
 import Notiflix from 'notiflix';
 import PropTypes from 'prop-types';

@@ -13,6 +13,7 @@ const Modal = ({ tags, largeImageURL, modal }) => {
     return () => {
       document.removeEventListener('keyup', handleKeyUp);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

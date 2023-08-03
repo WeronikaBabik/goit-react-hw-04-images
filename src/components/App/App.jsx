@@ -13,7 +13,7 @@ const App = () => {
   const [images, setImages] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [per_page, setPerPage] = useState(12);
+  const [per_page] = useState(12);
   const [loadMore, setLoadMore] = useState(false);
 
   useEffect(() => {
@@ -37,6 +37,7 @@ const App = () => {
       }
     };
     fetchImages(inputSearch, page);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputSearch, page]);
 
   const handleSubmit = data => {
